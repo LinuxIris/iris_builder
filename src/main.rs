@@ -59,7 +59,7 @@ fn config() {
 
     println!("Packages to be installed: {}", config.packages.packages.len());
     let packages_file_str = packages_x86_64_file::build(&config.packages.packages);
-    std::fs::write("/iris-minimal/archiso/packages.x86_64", packages_file_str).expect("Failed to overwrite packages.x86_64!");
+    std::fs::write("iris-minimal/archiso/packages.x86_64", packages_file_str).expect("Failed to overwrite packages.x86_64!");
 
     Command::new("bash")
         .args(["30-build-the-iso-the-first-time.sh"])
