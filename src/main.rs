@@ -53,7 +53,7 @@ fn setup() {
 fn clean() {
     println!("Cleaning up pacman cache...");
     Command::new("sudo")
-        .args(["pacman -Scc"])
+        .args(["pacman", "-Scc"])
         .status()
         .expect("Failed to clean pacman cache!");
 }
