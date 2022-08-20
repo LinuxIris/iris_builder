@@ -1,3 +1,4 @@
+use std::process::Command;
 use serde::Deserialize;
 
 mod packages_x86_64_file;
@@ -34,9 +35,9 @@ fn main() {
 }
 
 fn setup() {
-    use std::process::Command;
     println!("Setting up project...");
     println!("Cloning folders, make sure git is installed!");
+
     Command::new("git")
         .args(["clone", "https://github.com/LinuxIris/iris-minimal"])
         .status()
@@ -51,6 +52,7 @@ fn build() {
 }
 
 fn config() {
+    println!("Building project...");
     println!("Reading config file...");
     let file_str = std::fs::read_to_string("config.toml").expect("Failed to open config file!");
     let config: Config = toml::from_str(&file_str).expect("Failed to parse config file!");
@@ -58,4 +60,12 @@ fn config() {
     println!("Packages to be installed: {}", config.packages.packages.len());
     let packages_file_str = packages_x86_64_file::build(&config.packages.packages);
     std::fs::write("/iris-minimal/archiso/packages.x86_64", packages_file_str).expect("Failed to overwrite packages.x86_64!");
+
+    Command::new("bash")
+        .args(["30-build-the-iso-the-first-time.sh"])
+        .current_dir("iris-minimal/installation-scripts")
+        .status()
+        .expect("Failed to run bash script!");
+
+    println!("Project succesfully built!");
 }
