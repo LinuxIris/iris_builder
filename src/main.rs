@@ -38,7 +38,7 @@ fn setup() {
     println!("Setting up project...");
     println!("Cloning folders, make sure git is installed!");
     Command::new("git")
-        .args(["clone https://github.com/LinuxIris/iris-minimal"])
+        .args(["clone", "https://github.com/LinuxIris/iris-minimal"])
         .status()
         .expect("Failed to clone repository! Is git installed?");
 
