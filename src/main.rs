@@ -25,11 +25,12 @@ fn main() {
     }
     if argc > 0 {
         match args[0].as_ref() {
-            "help" => println!("Not yet finished... sorry :)"),
+            "help" => println!("Iris builder tool\n\nHelp: Shows this message\n\nSetup: Clones the main repository and sets the project up\n\nClean: Cleans up pacman cache\n\nBuild: Configures and builds the project\n\nUpdate: Pulls updates from the main repository"),
             "setup" => setup(),
+            "clean" => clean(),
             "build" => build(),
             "update" => update(),
-            _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tbuild\n\tupdate")
+            _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tclean\n\tbuild\n\tupdate")
         }
         return;
     }
