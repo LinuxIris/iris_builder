@@ -16,6 +16,7 @@ fn main() {
     println!("This software was designed to run only on arch/iris. If you are not running on arch/iris, this probably will not work at all!");
 
     let args: Vec<String> = std::env::args().collect();
+    let args: Vec<String> = args[1..].to_vec();
     let argc = args.len();
     if argc > 1 {
         println!("You can only specify 1 argument!");
