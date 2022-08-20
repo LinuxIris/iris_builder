@@ -43,6 +43,12 @@ fn setup() {
         .status()
         .expect("Failed to clone repository! Is git installed?");
 
+    println!("Cleaning up pacman cache...");
+    Command::new("pacman")
+        .args(["-Scc"])
+        .status()
+        .expect("Failed to clean pacman cache!");
+
     println!("Setup done! You can now safely run the build command!");
 }
 
@@ -62,7 +68,7 @@ fn config() {
     std::fs::write("iris-minimal/archiso/packages.x86_64", packages_file_str).expect("Failed to overwrite packages.x86_64!");
 
     Command::new("bash")
-        .args(["30-build-the-iso-the-first-time.sh"])
+        .args(["40-build-the-iso-local-again.sh"])
         .current_dir("iris-minimal/installation-scripts")
         .status()
         .expect("Failed to run bash script!");
