@@ -28,7 +28,8 @@ fn main() {
             "help" => println!("Not yet finished... sorry :)"),
             "setup" => setup(),
             "build" => build(),
-            _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tbuild")
+            "update" => update(),
+            _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tbuild\n\tupdate")
         }
         return;
     }
@@ -43,18 +44,40 @@ fn setup() {
         .status()
         .expect("Failed to clone repository! Is git installed?");
 
+    clean();
+
+    println!("Setup done! You can now safely run the build command!");
+}
+
+fn clean() {
     println!("Cleaning up pacman cache...");
     Command::new("pacman")
         .args(["-Scc"])
         .status()
         .expect("Failed to clean pacman cache!");
+}
 
-    println!("Setup done! You can now safely run the build command!");
+fn update() {
+    println!("Starting update process...");
+    println!("Updating iris-minimal...");
+    Command::new("git")
+        .args(["pull"])
+        .status()
+        .expect("Failed to git pull new version of iris-minimal!");
+    clean();
+    println!("Update complete!");
 }
 
 fn build() {
     config();
-    todo!();
+
+    Command::new("bash")
+        .args(["40-build-the-iso-local-again.sh"])
+        .current_dir("iris-minimal/installation-scripts")
+        .status()
+        .expect("Failed to run bash script!");
+
+    println!("Project succesfully built!");
 }
 
 fn config() {
@@ -66,12 +89,4 @@ fn config() {
     println!("Packages to be installed: {}", config.packages.packages.len());
     let packages_file_str = packages_x86_64_file::build(&config.packages.packages);
     std::fs::write("iris-minimal/archiso/packages.x86_64", packages_file_str).expect("Failed to overwrite packages.x86_64!");
-
-    Command::new("bash")
-        .args(["40-build-the-iso-local-again.sh"])
-        .current_dir("iris-minimal/installation-scripts")
-        .status()
-        .expect("Failed to run bash script!");
-
-    println!("Project succesfully built!");
 }
