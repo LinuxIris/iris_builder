@@ -86,6 +86,7 @@ fn update() {
     println!("Updating iris-minimal...");
     Command::new("git")
         .args(["pull"])
+        .current_dir("iris-minimal")
         .status()
         .expect("Failed to git pull new version of iris-minimal!");
     clean();
