@@ -13,31 +13,8 @@ struct PackageList {
     packages: Vec<String>,
 }
 
-fn old_main() {
-    println!("This software was designed to run only on arch/iris. If you are not running on arch/iris, this probably will not work at all!");
-
-    let args: Vec<String> = std::env::args().collect();
-    let args: Vec<String> = args[1..].to_vec();
-    let argc = args.len();
-    if argc > 1 {
-        println!("You can only specify 1 argument!");
-        return;
-    }
-    if argc > 0 {
-        match args[0].as_ref() {
-            "help" => println!("Iris builder tool\n\nHelp: Shows this message\n\nSetup: Clones the main repository and sets the project up\n\nClean: Cleans up pacman cache\n\nBuild: Configures and builds the project\n\nUpdate: Pulls updates from the main repository"),
-            "setup" => setup(),
-            "clean" => clean(),
-            "build" => build(),
-            "update" => update(),
-            _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tclean\n\tbuild\n\tupdate")
-        }
-        return;
-    }
-}
-
 fn main() {
-    use clap::{Arg, Command};
+    use clap::Command;
 
     let matches = Command::new("iris_builder")
         .about("Iris distro builder")
@@ -51,10 +28,10 @@ fn main() {
         .get_matches();
 
     match matches.subcommand() {
-        Some(("setup", subm)) => setup(),
-        Some(("clean", subm)) => clean(),
-        Some(("update", subm)) => update(),
-        Some(("build", subm)) => build(),
+        Some(("setup", _)) => setup(),
+        Some(("clean", _)) => clean(),
+        Some(("update", _)) => update(),
+        Some(("build", _)) => build(),
         _ => panic!("How did we get here?")
     }
 }
