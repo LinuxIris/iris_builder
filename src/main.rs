@@ -13,7 +13,7 @@ struct PackageList {
     packages: Vec<String>,
 }
 
-fn main() {
+fn old_main() {
     println!("This software was designed to run only on arch/iris. If you are not running on arch/iris, this probably will not work at all!");
 
     let args: Vec<String> = std::env::args().collect();
@@ -33,6 +33,29 @@ fn main() {
             _ => println!("Unknown argument specified! Acceptable arguments:\n\thelp\n\tsetup\n\tclean\n\tbuild\n\tupdate")
         }
         return;
+    }
+}
+
+fn main() {
+    use clap::{Arg, Command};
+
+    let matches = Command::new("iris_builder")
+        .about("Iris distro builder")
+        .version("0.0.1")
+        .arg_required_else_help(true)
+        .author("Lucky4Luuk")
+        .subcommand(Command::new("setup").about("Initial setup of required files"))
+        .subcommand(Command::new("clean").about("Cleans up package cache"))
+        .subcommand(Command::new("build").about("Builds the repo. Warning: might take long!"))
+        .subcommand(Command::new("update").about("Pulls any new iris-minimal repo changes"))
+        .get_matches();
+
+    match matches.subcommand() {
+        Some(("setup", subm)) => setup(),
+        Some(("clean", subm)) => clean(),
+        Some(("update", subm)) => update(),
+        Some(("build", subm)) => build(),
+        _ => panic!("How did we get here?")
     }
 }
 
