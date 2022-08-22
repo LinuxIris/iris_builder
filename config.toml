@@ -5,3 +5,6 @@ packages = [
 	"nano",
 	"archiso"
 ]
+
+[repos]
+alci_repo = { SigLevel = "Optional TrustedOnly", Server = "https://arch-linux-calamares-installer.github.io/$repo/$arch" }
