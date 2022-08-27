@@ -7,4 +7,5 @@ packages = [
 ]
 
 [repos]
-alci_repo = { SigLevel = "Optional TrustedOnly", Server = "https://arch-linux-calamares-installer.github.io/$repo/$arch" }
+# alci_repo = { SigLevel = "Optional TrustedOnly", Server = "https://arch-linux-calamares-installer.github.io/$repo/$arch" }
+iris_repo = { SigLevel = "Optional TrustedOnly", Server = "https://repo.0x01.wtf/irislinux/testing/os/x86_64" }
